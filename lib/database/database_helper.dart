@@ -1,5 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import '../models/producto.dart';
+import '../utils/constants.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -40,4 +42,59 @@ class DatabaseHelper {
       )
     ''');
   }
+  Future<int> insertarProducto(Producto producto) async {
+  final db = await instance.database;
+
+  return await db.insert(
+    DBConstants.tablaProductos,
+    producto.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.abort,
+  );
+}
+
+Future<List<Producto>> obtenerProductos() async {
+  final db = await instance.database;
+
+  final resultado = await db.query(
+    DBConstants.tablaProductos,
+    orderBy: 'nombre ASC',
+  );
+
+  return resultado.map((map) => Producto.fromMap(map)).toList();
+}
+Future<Producto?> buscarPorCodigo(String codigo) async {
+  final db = await instance.database;
+
+  final resultado = await db.query(
+    DBConstants.tablaProductos,
+    where: 'codigo = ?',
+    whereArgs: [codigo],
+    limit: 1,
+  );
+
+  if (resultado.isNotEmpty) {
+    return Producto.fromMap(resultado.first);
+  }
+
+  return null;
+}
+Future<int> actualizarProducto(Producto producto) async {
+  final db = await instance.database;
+
+  return await db.update(
+    DBConstants.tablaProductos,
+    producto.toMap(),
+    where: 'id = ?',
+    whereArgs: [producto.id],
+  );
+}
+Future<int> eliminarProducto(int id) async {
+  final db = await instance.database;
+
+  return await db.delete(
+    DBConstants.tablaProductos,
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
 }
