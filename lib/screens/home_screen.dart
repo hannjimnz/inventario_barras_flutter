@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'camera_demo_screen.dart';
+import 'scanner_screen.dart';
 import 'entrada_screen.dart';
 import 'registrar_producto_screen.dart';
 import 'reporte_screen.dart';
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
             (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const CameraDemoScreen(),
+                MaterialPageRoute(builder: (_) => const ScannerScreen(),
                 ),
               );
             }
