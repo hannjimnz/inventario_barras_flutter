@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SalidaScreen extends StatelessWidget {
+class CameraDemoScreen extends StatelessWidget {
 
-  const SalidaScreen({super.key});
+  const CameraDemoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Salida de productos"),
+        title: const Text("Cámara"),
       ),
 
       body: const Center(
         child: Text(
-          "Pantalla de salida",
+          "Aquí estará el lector de códigos",
         ),
       ),
     );
